@@ -1,6 +1,11 @@
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { type NextRequest, NextResponse } from "next/server";
 
+//Listado de rutas protegidas
+const routes = [
+  '/password',
+  '/products',
+];
 export const updateSession = async (request: NextRequest) => {
   // This `try/catch` block is only here for the interactive tutorial.
   // Feel free to remove once you have Supabase connected.
@@ -62,9 +67,30 @@ export const updateSession = async (request: NextRequest) => {
 
     // This will refresh session if expired - required for Server Components
     // https://supabase.com/docs/guides/auth/server-side/nextjs
-    await supabase.auth.getUser();
+    const { data: { user}} = await supabase.auth.getUser();
+
+    //Todo&&&&
+
+    console.log(request.nextUrl);
+    //si ingresa al login mostrar home
+    // if(request.nextUrl.pathname === '/login') {
+    //   return NextResponse.redirect(new URL('/', request.url))
+    // }
+    // Redirect to login if not logged in
+    if (!user) {
+      if (request.nextUrl.pathname.startsWith('/products')) {
+        // Redirect to login if trying to access any route within /products
+        return NextResponse.redirect(new URL('/login', request.url));
+      }
+ 
+      if(routes.includes( request.nextUrl.pathname )) {
+        // redireccionar al login
+        return NextResponse.redirect(new URL('/login', request.url))
+      }
+    }
 
     return response;
+  
   } catch (e) {
     // If you are here, a Supabase client could not be created!
     // This is likely because you have not set up environment variables.
