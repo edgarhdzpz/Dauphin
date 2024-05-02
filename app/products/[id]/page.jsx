@@ -71,7 +71,7 @@ export default function ProductPage({ params }) {
         
       </div>
 
-      <div className="p-2 m-auto w-1/3">
+      <div className="p-2 m-auto lg:w-1/2 w-full">
             <h1 className="text-xl font-bold mb-3 text-center">Same products</h1>
             
             <Slider
