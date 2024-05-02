@@ -54,7 +54,7 @@ export default function ListarProductos() {
       const { data: { session } } = await supabase.auth.getSession();
 
       //si no hay sesion 
-      if(!session) {
+      if (!session) {
         //redireccionarlo a login
         router.push('/login');
       }
@@ -107,18 +107,18 @@ export default function ListarProductos() {
 
   return (
     <div className="container mx-auto p-4">
-      <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16">
+      <nav className="w-full flex justify-center border-b border-b-foreground/10 h-16 bg-gray-700">
         <div className="w-full max-w-4xl flex justify-between items-center p-3 text-sm">
-        <p className='text-white'>Hey {userName} welcome</p>
+          <p className='text-white'>Hey {userName} welcome</p>
           <button className='py-2 px-4 rounded-md no-underline bg-btn-background hover:bg-btn-background-hover' onClick={handleSignOut}>LogOut</button>
         </div>
       </nav>
 
-      <form onSubmit={handleSearchSubmit} className="flex items-center justify-center mb-4">
-        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={navigateToCreateProductPage}>
+      <form onSubmit={handleSearchSubmit} className="flex flex-col md:flex-row items-center justify-center my-6">
+        <button className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-2 md:mb-0" onClick={navigateToCreateProductPage}>
           Crear Producto
         </button>
-        <button className="ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded" onClick={navigateToUpdateProductPage}>
+        <button className="ml-0 md:ml-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mb-2 md:mb-0" onClick={navigateToUpdateProductPage}>
           Actualizar Producto
         </button>
         <input
@@ -126,36 +126,36 @@ export default function ListarProductos() {
           placeholder="Buscar productos..."
           value={searchTerm}
           onChange={handleSearchChange}
-          className="ml-2 p-2 rounded-l-lg border border-gray-300 focus:outline-none focus:border-blue-500 text-black"
+          className="ml-0 md:ml-2 p-2 rounded-l-lg border border-gray-300 focus:outline-none focus:border-blue-500 text-black mb-2 md:mb-0"
         />
         <button
           type="submit"
-          className="ml-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none"
+          className="ml-0 md:ml-2 bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 focus:outline-none"
         >
           Buscar
         </button>
       </form>
 
-      <div className="p-2 m-auto w-1/2">
+      <div className="p-2 m-auto lg:w-1/2 w-full">
         <h1 className="text-xl font-bold mb-3 text-center">The best products</h1>
 
         <Slider
           height={270}
           cardWidth={200}
           items={products.map((product) => productCard(product))}
-          className="my-6 mx4">
+          className="my-6 mx-4">
         </Slider>
       </div>
 
       <h1 className="text-3xl font-bold mb-4 text-center">Lista de Productos</h1>
 
-      <div className='flex items-center justify-center mb-4 m-auto w-1/2'>
+      <div className='flex items-center justify-center mb-4 m-auto lg:w-1/2 w-full'>
         <ul>
           {productos.map((producto) => (
             <li key={producto.id} className="border-b border-gray-200 py-2" onClick={() => handleProductClick(producto)}>
               <p className="font-bold">Nombre: {producto.name}</p>
               <p className="text-blue-500">Precio: ${producto.price}</p>
-              <p className="text-gray-600">Descripción: {producto.description}</p>
+              <p className="text-gray-600 text-blod text-pretty">Descripción: {producto.description}</p>
               <p className="text-blue-500">stock: {producto.stock}</p>
               <p className="text-gray-500">Categoría: {producto.category}</p>
             </li>
